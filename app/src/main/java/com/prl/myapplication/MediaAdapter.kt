@@ -30,6 +30,12 @@ class MediaAdapter(private val data: List<MediaItem>) :
         private val title: TextView = view.tvTitle
         private val bannerImage: ImageView = view.ivMedia
 
+        init {
+            view.setOnClickListener {
+                showToast("${title.text}")
+            }
+        }
+
         fun bind(mediaItem: MediaItem) {
             title.text = mediaItem.name
             bannerImage.load(mediaItem.imageUrl)

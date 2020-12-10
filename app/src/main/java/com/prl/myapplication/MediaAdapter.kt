@@ -1,5 +1,6 @@
 package com.prl.myapplication
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -7,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prl.myapplication.data.model.MediaItem
-import kotlinx.android.synthetic.main.item_media.view.*
+import com.prl.myapplication.databinding.ItemMediaBinding
 
 class MediaAdapter(private val data: List<MediaItem>) :
     RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
@@ -15,21 +16,23 @@ class MediaAdapter(private val data: List<MediaItem>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ) = MediaViewHolder(parent.inflate(R.layout.item_media))
+    ): MediaViewHolder {
+        return MediaViewHolder(ItemMediaBinding.inflate(LayoutInflater.from(parent.context)))
+    }
 
-    override fun onBindViewHolder(holder: MediaAdapter.MediaViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MediaViewHolder, position: Int) {
         holder.bind(data[position])
     }
 
     override fun getItemCount() = data.size
 
-    class MediaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val title: TextView = view.tvTitle
-        private val bannerImage: ImageView = view.ivMedia
-        private val playIcon: ImageView = view.ivPlay
+    class MediaViewHolder(binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val title: TextView = binding.tvTitle
+        private val bannerImage: ImageView = binding.ivMedia
+        private val playIcon: ImageView = binding.ivPlay
 
         init {
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 showToast("${title.text}")
             }
         }

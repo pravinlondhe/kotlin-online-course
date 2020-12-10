@@ -26,6 +26,7 @@ class MediaAdapter(private val data: List<MediaItem>) :
     class MediaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val title: TextView = view.tvTitle
         private val bannerImage: ImageView = view.ivMedia
+        private val playIcon: ImageView = view.ivPlay
 
         init {
             view.setOnClickListener {
@@ -36,6 +37,10 @@ class MediaAdapter(private val data: List<MediaItem>) :
         fun bind(mediaItem: MediaItem) {
             title.text = mediaItem.name
             bannerImage.load(mediaItem.imageUrl)
+            when (mediaItem.mediaType) {
+                MediaItem.MediaType.PHOTO -> playIcon.visibility = View.GONE
+                MediaItem.MediaType.VIDEO -> playIcon.visibility = View.VISIBLE
+            }
         }
     }
 }

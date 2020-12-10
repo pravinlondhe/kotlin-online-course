@@ -2,26 +2,40 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:layout_margin="4dp"
+    android:layout_width="wrap_content">
 
     <ImageView
         android:id="@+id/ivMedia"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
         android:importantForAccessibility="no"
+        android:layout_height="240dp"
+        android:layout_width="240dp"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/ivPlay"
+        android:importantForAccessibility="no"
+        android:layout_height="48dp"
+        android:layout_width="48dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_play_circle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/ivMedia"
+        app:layout_constraintEnd_toEndOf="@id/ivMedia"
+        app:layout_constraintStart_toStartOf="@id/ivMedia"
+        app:layout_constraintTop_toTopOf="@id/ivMedia"
+        tools:visibility="visible" />
+
     <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="0dp"
-        android:layout_height="24dp"
         android:gravity="center"
+        android:id="@+id/tvTitle"
+        android:layout_height="24dp"
+        android:layout_width="0dp"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/ivMedia"

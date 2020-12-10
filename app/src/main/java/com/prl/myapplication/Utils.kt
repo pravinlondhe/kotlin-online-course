@@ -1,5 +1,8 @@
 package com.prl.myapplication
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,3 +15,7 @@ fun RecyclerView.ViewHolder.showToast(msg: String, duration: Int = Toast.LENGTH_
 }
 
 fun ViewGroup.inflate(@LayoutRes layout: Int): View = LayoutInflater.from(context).inflate(layout, this, false)
+
+inline fun <reified T: Activity> Context.startActivity(){
+    startActivity(Intent(this, T::class.java))
+}

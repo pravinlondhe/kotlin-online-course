@@ -3,8 +3,6 @@ package com.prl.myapplication
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prl.myapplication.data.model.MediaItem
@@ -26,23 +24,25 @@ class MediaAdapter(private val data: List<MediaItem>) :
 
     override fun getItemCount() = data.size
 
-    class MediaViewHolder(binding: ItemMediaBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val title: TextView = binding.tvTitle
-        private val bannerImage: ImageView = binding.ivMedia
-        private val playIcon: ImageView = binding.ivPlay
+    class MediaViewHolder(private val binding: ItemMediaBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener {
-                showToast("${title.text}")
+            with(binding) {
+                root.setOnClickListener {
+                    showToast("${tvTitle.text}")
+                }
             }
         }
 
         fun bind(mediaItem: MediaItem) {
-            title.text = mediaItem.name
-            bannerImage.load(mediaItem.imageUrl)
-            when (mediaItem.mediaType) {
-                MediaItem.MediaType.PHOTO -> playIcon.visibility = View.GONE
-                MediaItem.MediaType.VIDEO -> playIcon.visibility = View.VISIBLE
+            with(binding) {
+                tvTitle.text = mediaItem.name
+                ivMedia.load(mediaItem.imageUrl)
+                when (mediaItem.mediaType) {
+                    MediaItem.MediaType.PHOTO -> ivPlay.visibility = View.GONE
+                    MediaItem.MediaType.VIDEO -> ivPlay.visibility = View.VISIBLE
+                }
             }
         }
     }

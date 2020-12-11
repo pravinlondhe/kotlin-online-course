@@ -12,7 +12,9 @@ class MainActivity : AppCompatActivity(), Logger {
         setContentView(binding.root)
         v("OnCreate start")
         binding.rvMedia.apply {
-            adapter = MediaAdapter(getStubMediaList())
+            adapter = MediaAdapter(getStubMediaList()) {
+                d("Clicked:$it")
+            }
         }
     }
 }

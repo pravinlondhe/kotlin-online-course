@@ -8,7 +8,7 @@ import coil.load
 import com.prl.myapplication.data.model.MediaItem
 import com.prl.myapplication.databinding.ItemMediaBinding
 
-class MediaAdapter(private val data: List<MediaItem>) :
+class MediaAdapter(private val data: List<MediaItem>, private val itemListener: (String) -> Unit) :
     RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -24,12 +24,13 @@ class MediaAdapter(private val data: List<MediaItem>) :
 
     override fun getItemCount() = data.size
 
-    class MediaViewHolder(private val binding: ItemMediaBinding) :
+    inner class MediaViewHolder(private val binding: ItemMediaBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         init {
             with(binding) {
                 root.setOnClickListener {
+                    itemListener("${tvTitle.text}")
                     showToast("${tvTitle.text}")
                 }
             }

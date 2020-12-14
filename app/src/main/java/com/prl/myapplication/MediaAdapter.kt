@@ -9,9 +9,10 @@ import com.prl.myapplication.data.model.MediaItem
 import com.prl.myapplication.databinding.ItemMediaBinding
 import kotlin.properties.Delegates
 
-class MediaAdapter(data: List<MediaItem>, private val itemListener: (String) -> Unit) :
+class MediaAdapter(media: List<MediaItem>, private val itemListener: (String) -> Unit) :
     RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
-    var data: List<MediaItem> by Delegates.observable(data) { _, old, new ->
+
+    var data: List<MediaItem> by Delegates.observable(media) { _, old, new ->
         if (old != new) {
             this.data = new
             notifyDataSetChanged()

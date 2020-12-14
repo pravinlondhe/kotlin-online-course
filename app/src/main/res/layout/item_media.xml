@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
-    android:layout_width="wrap_content">
+    android:layout_width="0dp">
 
     <ImageView
         android:id="@+id/ivMedia"
         android:importantForAccessibility="no"
         android:layout_height="240dp"
         android:layout_width="240dp"
+        android:padding="8dp"
         android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"
         app:layout_constraintEnd_toEndOf="parent"

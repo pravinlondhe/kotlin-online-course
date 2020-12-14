@@ -4,7 +4,7 @@ import com.prl.myapplication.data.model.MediaItem
 
 object MockGenerator {
 
-    fun getStubMediaList() = listOf<MediaItem>(
+    fun getStubMediaList() = listOf(
         MediaItem(
             "Tom Cruise",
             "https://c4.wallpaperflare.com/wallpaper/692/291/745/best-actor-tom-cruise-face-photo-wallpaper-preview.jpg",
@@ -63,4 +63,12 @@ object MockGenerator {
             MediaItem.MediaType.VIDEO
         )
     )
+
+    fun getStubPhotoList(): List<MediaItem> {
+        return getStubMediaList().filter { it.mediaType == MediaItem.MediaType.PHOTO }
+    }
+
+    fun getStubVideoList(): List<MediaItem> {
+        return getStubMediaList().filter { it.mediaType == MediaItem.MediaType.VIDEO }
+    }
 }

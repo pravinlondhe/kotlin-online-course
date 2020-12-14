@@ -7,9 +7,16 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.prl.myapplication.data.model.MediaItem
 import com.prl.myapplication.databinding.ItemMediaBinding
+import kotlin.properties.Delegates
 
-class MediaAdapter(private val data: List<MediaItem>, private val itemListener: (String) -> Unit) :
+class MediaAdapter(data: List<MediaItem>, private val itemListener: (String) -> Unit) :
     RecyclerView.Adapter<MediaAdapter.MediaViewHolder>() {
+    var data: List<MediaItem> by Delegates.observable(data) { _, old, new ->
+        if (old != new) {
+            this.data = new
+            notifyDataSetChanged()
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

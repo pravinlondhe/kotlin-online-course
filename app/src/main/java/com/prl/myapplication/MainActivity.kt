@@ -3,27 +3,33 @@ package com.prl.myapplication
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.prl.myapplication.MockGenerator.getStubMediaList
-import com.prl.myapplication.MockGenerator.getStubPhotoList
-import com.prl.myapplication.MockGenerator.getStubVideoList
+import com.prl.myapplication.data.model.MediaItem
 import com.prl.myapplication.databinding.ActivityMainBinding
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity(), Logger {
     private val mediaAdapter by lazy {
-        MediaAdapter(getStubMediaList()) {
+        MediaAdapter(listOf()) {
             d("Clicked:$it")
         }
+    }
+    private lateinit var binding: ActivityMainBinding
+    private val lifecycleScope by lazy {
+        CoroutineScope(Dispatchers.Main + Job())
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         v("OnCreate start")
         binding.rvMedia.apply {
             adapter = mediaAdapter
         }
+        updateList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -33,10 +39,24 @@ class MainActivity : AppCompatActivity(), Logger {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.photo -> mediaAdapter.data = getStubPhotoList()
-            R.id.video -> mediaAdapter.data = getStubVideoList()
-            R.id.all -> mediaAdapter.data = getStubMediaList()
+            R.id.photo -> updateList(Photo)
+            R.id.video -> updateList(Video)
+            R.id.all -> updateList()
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun updateList(mediaType: MediaType = All) {
+
+        lifecycleScope.launch {
+            binding.progressBar.visibility = View.VISIBLE
+            val list: List<MediaItem>
+            withContext(Dispatchers.IO) {
+                list = getStubMediaList(mediaType)
+            }
+            d("List:$list")
+            mediaAdapter.data = list
+            binding.progressBar.visibility = View.INVISIBLE
+        }
     }
 }

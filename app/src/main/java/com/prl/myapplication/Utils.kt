@@ -10,6 +10,11 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 
+sealed class MediaType
+object Photo : MediaType()
+object Video : MediaType()
+object All : MediaType()
+
 fun RecyclerView.ViewHolder.showToast(msg: String?, duration: Int = Toast.LENGTH_LONG) {
     Toast.makeText(itemView.context, msg, duration).show()
 }

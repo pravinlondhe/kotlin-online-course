@@ -49,8 +49,8 @@ class MediaAdapter(media: List<MediaItem>, private val itemListener: (String) ->
                 tvTitle.text = mediaItem.name
                 ivMedia.load(mediaItem.imageUrl)
                 when (mediaItem.mediaType) {
-                    MediaItem.MediaType.PHOTO -> ivPlay.visibility = View.GONE
-                    MediaItem.MediaType.VIDEO -> ivPlay.visibility = View.VISIBLE
+                    is Video -> ivPlay.visibility = View.VISIBLE
+                    else -> ivPlay.visibility = View.GONE
                 }
             }
         }

@@ -1,11 +1,31 @@
 package com.prl.myapplication
 
+import android.util.Log.d
 import com.prl.myapplication.data.model.MediaItem
+import kotlinx.coroutines.delay
 
 object MockGenerator {
 
-    fun getStubMediaList(mediaType: MediaType = All): List<MediaItem> {
-        Thread.sleep(2000)
+    suspend fun printStubData() {
+        for (i in 1..50) {
+            delay(100)
+            d(
+                javaClass.simpleName,
+                "$i Thread:${Thread.currentThread().name} ${System.currentTimeMillis()}"
+            )
+        }
+    }
+
+    suspend fun getStubMediaList(mediaType: MediaType = All): List<MediaItem> {
+        d(
+            javaClass.simpleName,
+            "I am on thread(in IO)-0:${Thread.currentThread().name} at ${System.currentTimeMillis()}"
+        )
+        delay(2000)
+        d(
+            javaClass.simpleName,
+            "I am on thread(in IO):${Thread.currentThread().name} at ${System.currentTimeMillis()}"
+        )
         val list = listOf(
             MediaItem(
                 "Tom Cruise",

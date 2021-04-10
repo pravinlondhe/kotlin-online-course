@@ -6,6 +6,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.prl.myapplication.MockGenerator.getStubMediaList
+import com.prl.myapplication.MockGenerator.printStubData
 import com.prl.myapplication.data.model.MediaItem
 import com.prl.myapplication.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
@@ -50,13 +51,19 @@ class MainActivity : AppCompatActivity(), Logger {
 
         lifecycleScope.launch {
             binding.progressBar.visibility = View.VISIBLE
+            d("I am on thread:${Thread.currentThread().name}")
             val list: List<MediaItem>
             withContext(Dispatchers.IO) {
-                list = getStubMediaList(mediaType)
+                d("I am on thread(in IO):${Thread.currentThread().name}")
+                val d = async { getStubMediaList(mediaType) }
+                async { printStubData() }
+                list = d.await()
+                d("List:$list")
+                withContext(Dispatchers.Main) {
+                    mediaAdapter.data = list
+                    binding.progressBar.visibility = View.INVISIBLE
+                }
             }
-            d("List:$list")
-            mediaAdapter.data = list
-            binding.progressBar.visibility = View.INVISIBLE
         }
     }
 }

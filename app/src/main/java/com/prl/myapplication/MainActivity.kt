@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity(), Logger {
         }
     }
     private lateinit var binding: ActivityMainBinding
-    private val lifecycleScope by lazy {
+    private val activityScope by lazy {
         CoroutineScope(Dispatchers.Main + Job())
     }
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), Logger {
 
     private fun updateList(mediaType: MediaType = All) {
 
-        lifecycleScope.launch {
+        activityScope.launch {
             binding.progressBar.visibility = View.VISIBLE
             d("I am on thread:${Thread.currentThread().name}")
             val list: List<MediaItem>
